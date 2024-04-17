@@ -38,7 +38,9 @@ const userLogin = async (data) => {
       },
       raw: true
     })
+
     if (existUser && existUser.password === password) {
+      console.log(existUser)
       return existUser
     } else {
       return false

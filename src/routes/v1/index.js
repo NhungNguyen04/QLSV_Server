@@ -5,6 +5,6 @@ const Router = express.Router()
 
 Router.get('/v1', (req, res) => res.json('ready to use'))
 
-Router.use('/v2', userRouter )
+Router.use('/v1', userRouter )
 
 module.exports = { Router }

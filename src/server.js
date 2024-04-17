@@ -11,7 +11,8 @@ const { Router } = require('./routes/v1/index')
 const { errorHandlingMiddleware } = require('./middlewares/errorHandling')
 const port = process.env.PORT || 3000
 require('./models/user')
-
+require('./models/course')
+require('./models/class')
 
 app.use(cors())
 app.use(bodyParser.json())

@@ -40,18 +40,32 @@ const userLogin = async (data) => {
     })
 
     if (existUser && existUser.password === password) {
-      console.log(existUser)
       return existUser
-    } else {
-      return false
     }
   } catch (err) {
     throw new err
   }
 }
 
+const userRegister = async (data) => {
+  try {
+    const [newUser, created] = await User.findOrCreate({
+      where: {
+        username: data.username
+      },
+      defaults: {
+        password: data.password
+      }
+    })
+    if (created) return newUser
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
 module.exports = {
   User,
   getAllUsers,
-  userLogin
+  userLogin,
+  userRegister
 }

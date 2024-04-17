@@ -16,7 +16,17 @@ const userLogin = async (data) => {
   }
 }
 
+const userRegister = async (data) => {
+  try {
+    const newUser = await User.userRegister(data)
+    return newUser
+  } catch (err) {
+    throw new err
+  }
+}
+
 module.exports = {
   getAllUsers,
-  userLogin
+  userLogin,
+  userRegister
 }

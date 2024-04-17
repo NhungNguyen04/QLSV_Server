@@ -19,3 +19,12 @@ exports.userLogin = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.userRegister = async (req, res, next) => {
+  try {
+    const newUser = await userService.userRegister(req.body)
+    if (newUser) res.status(200).json(newUser)
+  } catch (err) {
+    next(err)
+  }
+}

@@ -1,20 +1,18 @@
-const userService = require('~/services/userService')
+const User = require('~/models/user')
 
-exports.getAllUsers = async (req, res) => {
+exports.getAllUsers = async (req, res, next) => {
   try {
-    const allUsers = await userService.getAllUsers()
-    res.status(200).json(allUsers)
-  } catch (err) {
-    res.status(500).json(err)
-  }
+    const allUsers = await User.getAllUsers()
+    if (allUsers) res.status(200).json(allUsers)
+  } catch (err) { next(err) }
 }
 
 exports.userLogin = async (req, res, next) => {
 
   try {
-    const existUser = await userService.userLogin(req.body)
+    const existUser = await User.userLogin(req.body)
     if (existUser) res.status(200).json(existUser)
-    else res.status(400).json('wrong credentials')
+    else res.status(401).json('Unauthorized')
   } catch (err) {
     next(err)
   }
@@ -22,7 +20,7 @@ exports.userLogin = async (req, res, next) => {
 
 exports.userRegister = async (req, res, next) => {
   try {
-    const newUser = await userService.userRegister(req.body)
+    const newUser = await User.userRegister(req.body)
     if (newUser) res.status(200).json(newUser)
   } catch (err) {
     next(err)

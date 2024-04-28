@@ -1,9 +1,8 @@
-const courseService = require('../services/courseService')
-
+const Course = require('~/models/course')
 exports.insertCourse = async (req, res, next) => {
   try {
-    const newCourse = await courseService.insertCourse(req.body)
-    res.status(200).json(newCourse)
+    const newCourse = await Course.insertCourse(req.body)
+    if (newCourse) res.status(200).json(newCourse)
   } catch (err) {
     next(err)
   }
@@ -11,8 +10,8 @@ exports.insertCourse = async (req, res, next) => {
 
 exports.getAllCourses = async (req, res, next) => {
   try {
-    const allCourses = await courseService.getAllCourses()
-    res.status(200).json(allCourses)
+    const allCourses = await Course.getAllCourses()
+    if (allCourses) res.status(200).json(allCourses)
   } catch (err) {
     next(err)
   }

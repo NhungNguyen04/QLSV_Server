@@ -1,6 +1,8 @@
 /* eslint-disable indent */
 const Sequelize = require('sequelize')
 const { Course } = require('../models/course')
+const { Notification } = require('../models/notification')
+const { Test } = require('../models/test')
 const sequelize = require('../config/database')
 
 const Class = sequelize.define('class', {
@@ -62,6 +64,19 @@ Course.hasMany(Class, {
     onUpdate: 'CASCADE'
 })
 Class.belongsTo(Course)
+
+Class.hasMany(Notification, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
+Notification.belongsTo(Class)
+
+Class.hasMany(Test, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
+Test.belongsTo(Class)
+
 
 module.exports = {
     Class,

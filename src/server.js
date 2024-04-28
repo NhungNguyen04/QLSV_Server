@@ -6,14 +6,21 @@ require('dotenv').config()
 const app = express()
 
 const sequelize = require('./config/database')
-const { Router } = require('./routes/v1/index')
+const { Router } = require('./routes/index')
 
 const { errorHandlingMiddleware } = require('./middlewares/errorHandling')
 const port = process.env.PORT || 3000
-require('./models/user')
-require('./models/course')
-require('./models/class')
 
+// tables
+// require('./models/user')
+// require('./models/course')
+// require('./models/class')
+// require('./models/enrollment')
+// require('./models/score')
+// require('./models/notification')
+// require('./models/test')
+// require('./models/deadline')
+// require('./models/note')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

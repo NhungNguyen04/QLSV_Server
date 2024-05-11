@@ -28,3 +28,13 @@ exports.getAllEnrollmentsByUserId = async (req, res, next) => {
   }
 }
 
+exports.getEnrollmentsBySemester = async (req, res, next) => {
+  const { userId } = req.params
+  try {
+    const result = await Enrollment.getEnrollmentsBySemester(req.query, userId)
+    if (result) res.status(200).json(result)
+  } catch (err) {
+    next(err)
+  }
+}
+

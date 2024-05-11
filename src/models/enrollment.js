@@ -11,6 +11,14 @@ const Enrollment = sequelize.define('enrollment', ({
     allowNull: false,
     autoIncrement: true,
     primaryKey: true
+  },
+  hocKi: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  namHoc: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 }))
 
@@ -47,8 +55,21 @@ const getAllEnrollmentsByUserId = async (id) => {
   }
 }
 
-Class.belongsToMany(User, { through: { model: Enrollment, unique: false } })
-User.belongsToMany(Class, { through: { model: Enrollment, unique: false } })
+const getEnrollmentsBySemester = async (data, userId) => {
+  try {
+    const result = await Enrollment.findAll({
+      where: {
+        hocKi: data.hocKi,
+        namHoc: data.namHoc,
+        userId: userId
+      }
+    })
+    if (result) return result
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
 
 Enrollment.hasMany(Score)
 Score.belongsTo(Enrollment)
@@ -57,5 +78,6 @@ module.exports = {
   Enrollment,
   insertEnrollment,
   getAllEnrollments,
-  getAllEnrollmentsByUserId
+  getAllEnrollmentsByUserId,
+  getEnrollmentsBySemester
 }

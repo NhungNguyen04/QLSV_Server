@@ -3,9 +3,8 @@ const Sequelize = require('sequelize')
 const sequelize = require('../config/database')
 
 const Course = sequelize.define('course', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
+  maMon: {
+    type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true
   },
@@ -25,17 +24,11 @@ const Course = sequelize.define('course', {
 
 const insertCourse = async (data) => {
   try {
-    const [newCourse, created] = await Course.findOrCreate({
-      where: {
-        name: data.name,
-        type: data.type
-      },
-      defaults: {
-        credits: data.credits
-      }
+    const newCourse = await Course.create({
+      ...data
     })
 
-    if (created) return newCourse
+    if (newCourse) return newCourse
 
   } catch (err) {
     throw new Error(err)

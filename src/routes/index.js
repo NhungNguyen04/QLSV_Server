@@ -4,6 +4,11 @@ const { courseRouter } = require('./course')
 const { classRouter } = require('./class')
 const { enrollmentRouter } = require('./enrollment')
 const { testRouter } = require('./test')
+const { default: noteRouter } = require('./note')
+const { default: scoreRouter } = require('./score')
+const { default: majorRouter } = require('./major')
+const { default: deadlineRouter } = require('./deadline')
+const { default: notiRouter } = require('./noti')
 
 const Router = express.Router()
 
@@ -14,5 +19,9 @@ Router.use('/course', courseRouter)
 Router.use('/class', classRouter)
 Router.use('/enrollment', enrollmentRouter)
 Router.use('/test', testRouter)
-
+Router.use('/note', noteRouter)
+Router.use('/score', scoreRouter)
+Router.use('/major', majorRouter)
+Router.use('/deadline', deadlineRouter)
+Router.use('/noti', notiRouter)
 module.exports = { Router }

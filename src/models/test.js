@@ -36,7 +36,7 @@ const insertTest = async (data) => {
 
 const getAllTestsByClassId = async (classId) => {
   try {
-    const allTestsByClassId = await Test.findAll({ where: { classId } })
+    const allTestsByClassId = await Test.findAll({ where: { maLop: classId } })
     return allTestsByClassId
   } catch (err) {
     throw new Error(err)

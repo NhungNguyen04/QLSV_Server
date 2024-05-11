@@ -26,3 +26,12 @@ exports.userRegister = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.detailUser = async (req, res, next) => {
+  try {
+    const user = await User.detailUser(req.params.id)
+    if (user) res.status(200).json([user])
+  } catch (err) {
+    next(err)
+  }
+}

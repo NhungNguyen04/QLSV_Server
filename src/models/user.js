@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 
 const sequelize = require('../config/database')
+const { Major } = require('./major')
 
 const User = sequelize.define('user', {
   id: {
@@ -9,11 +10,43 @@ const User = sequelize.define('user', {
     allowNull: false,
     primaryKey: true
   },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   username: {
     type: Sequelize.STRING,
     allowNull: false
   },
   password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  birthday: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  accumulatedCredits: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  totalScore: {
+    type: Sequelize.FLOAT,
+    allowNull: false
+  },
+  accumlatedScore: {
+    type: Sequelize.FLOAT,
+    allowNull: false
+  },
+  class: {
     type: Sequelize.STRING,
     allowNull: false
   }
@@ -54,7 +87,7 @@ const userRegister = async (data) => {
         username: data.username
       },
       defaults: {
-        password: data.password
+        ...data
       }
     })
     if (created) return newUser
@@ -63,9 +96,25 @@ const userRegister = async (data) => {
   }
 }
 
+const detailUser = async (id) => {
+  try {
+    const user = await User.findOne({ where: { id } })
+    if (user) {
+      const major = await Major.findOne({ where: { id: user.majorId } })
+      user.dataValues['majorName'] = major.name
+      return user
+    }
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+User.belongsTo(Major)
+
 module.exports = {
   User,
   getAllUsers,
   userLogin,
-  userRegister
+  userRegister,
+  detailUser
 }

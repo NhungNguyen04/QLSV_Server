@@ -21,6 +21,7 @@ const port = process.env.PORT || 3000
 // require('./models/test')
 // require('./models/deadline')
 // require('./models/note')
+// require('./models/major')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

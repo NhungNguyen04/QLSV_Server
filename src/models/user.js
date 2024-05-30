@@ -42,7 +42,7 @@ const User = sequelize.define('user', {
     type: Sequelize.FLOAT,
     allowNull: false
   },
-  accumlatedScore: {
+  accumulatedScore: {
     type: Sequelize.FLOAT,
     allowNull: false
   },
@@ -62,23 +62,40 @@ const getAllUsers = async () => {
   }
 }
 
+
 const userLogin = async (data) => {
-  const { username, password } = data
+
+  const { username, password } = data;
   try {
+    console.log('Attempting to find user:', username);
     const existUser = await User.findOne({
       where: {
         username
       },
       raw: true
-    })
+    });
 
-    if (existUser && existUser.password === password) {
-      return existUser
+
+    if (!existUser) {
+      console.log('User not found:', username);
+      throw new Error('User not found');
     }
+
+    if (existUser.password !== password) {
+      console.log('Invalid password for user:', username);
+      throw new Error('Invalid password');
+    }
+
+    console.log('User authenticated:', username);
+    return existUser;
   } catch (err) {
-    throw new err
+    console.error('Error during user login:', err.message);
+    throw err;
   }
-}
+};
+
+module.exports = { userLogin };
+
 
 const userRegister = async (data) => {
   try {
